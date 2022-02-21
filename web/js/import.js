@@ -71,5 +71,8 @@ document.write(
   "<script src='./js/noHorizontal.js?t=" + queryParams("t") + "'></s" + "cript>"
 );
 document.write(
+  "<script src='./js/prohibit.js?t=" + queryParams("t") + "'></s" + "cript>"
+);
+document.write(
   "<script src='./js/elementEvent.js?t=" + queryParams("t") + "'></s" + "cript>"
 );
