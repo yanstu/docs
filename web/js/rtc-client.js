@@ -55,7 +55,7 @@ class RtcClient {
           audio: true,
           video: true,
           userId: this.userId_,
-          mirror: true,
+          mirror: false, // 是否开启镜像
         });
       }
       try {
