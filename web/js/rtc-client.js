@@ -79,7 +79,6 @@ class RtcClient {
             if (error.message === "Permission denied by system") {
               msg = "请确保系统允许当前浏览器访问摄像头/麦克风。";
             } else {
-              console.log("用户拒绝分享屏幕");
               msg = "请允许当前网页访问摄像头/麦克风，否则将无法正常使用。";
             }
             break;
