@@ -371,77 +371,6 @@
         </div>
       </div>
 
-      <!-- 成员列表 -->
-      <div
-        id="userList"
-        class="pointer-events-none opacity-90 justify-content-center hidden drop-shadow-md col-div card fixed top-0 left-0 z-40 w-full h-full flex flex-col items-center"
-        style="justify-content: center !important"
-      >
-        <div
-          id="member-list"
-          class="col-div bg-white w-[100%] h-[92%] p-1 overscroll-contain"
-        >
-          <!-- member -->
-          <div
-            id="member-me"
-            class="flex border-b"
-            style="width: 100%; padding-left: 20px"
-          >
-            <div
-              class="row-div member flex items-center"
-              style="width: 100%; height: 50px; justify-content: space-between"
-            >
-              <div class="member-id">user_7157526(我)</div>
-              <div
-                class="row-div flex"
-                style="width: 100px; height: 26px; justify-content: center"
-              >
-                <img
-                  class="member-video-btn"
-                  style="height: 100%"
-                  src="./img/camera-on.png"
-                  alt=""
-                />
-                <div style="width: 18px"></div>
-                <div
-                  style="
-                    width: 28px;
-                    height: 28px;
-                    display: inline-block;
-                    position: relative;
-                  "
-                >
-                  <img
-                    class="member-audio-btn"
-                    style="width: 100%; height: 100%"
-                    src="./img/mic-on.png"
-                    alt=""
-                  />
-                  <div
-                    class="volume-level"
-                    style="
-                      position: absolute;
-                      bottom: 0;
-                      left: 0;
-                      width: 28px;
-                      height: 0%;
-                      overflow: hidden;
-                      transition: height 0.1s ease;
-                    "
-                  >
-                    <img
-                      style="position: absolute; bottom: 0"
-                      alt=""
-                      src="./img/mic-green.png"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <!-- 预加载所有网络图片资源，防止断网后加载不出断网图标图片 -->
       <div style="visibility: hidden">
         <img src="./img/network/network_0.png" alt="" />
@@ -532,8 +461,6 @@
         alert("参数错误");
         leave();
       }
-
-      Runrtc();
 
       $("#mask_main").hide();
     </script>

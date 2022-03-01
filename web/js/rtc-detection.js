@@ -1,3 +1,6 @@
+TRTC.Logger.setLogLevel(TRTC.Logger.LogLevel.WARN);
+TRTC.Logger.disableUploadLog();
+
 const DEVICE_TYPE_ENUM = {
   DESKTOP_WIN: "desktop_win",
   DESKTOP_MAC: "desktop_mac",
@@ -6,6 +9,46 @@ const DEVICE_TYPE_ENUM = {
 };
 
 const deviceType = getDeviceType();
+
+function trtcPreliminaryDetection() {
+  rtcDetection().then((detectionResult) => {
+    detectionResult && deviceTestingInit();
+  });
+
+  TRTC.getDevices()
+    .then((devices) => {
+      devices.forEach((item) => {
+        console.log("设备: " + item.label);
+      });
+    })
+    .catch((error) => console.error("getDevices发生错误：" + error));
+
+  TRTC.getCameras().then((devices) => {
+    devices.forEach((device) => {
+      if (!cameraId) {
+        cameraId = device.deviceId;
+      }
+      cameraData.push(device.deviceId);
+      let div = $("<div></div>");
+      div.attr("id", device.deviceId);
+      div.html(device.label);
+      div.appendTo("#camera-option");
+    });
+  });
+
+  TRTC.getMicrophones().then((devices) => {
+    devices.forEach((device) => {
+      if (!micId) {
+        micId = device.deviceId;
+      }
+      micData.push(device.deviceId);
+      let div = $("<div></div>");
+      div.attr("id", device.deviceId);
+      div.html(device.label);
+      div.appendTo("#mic-option");
+    });
+  });
+}
 
 /**
  * 获取当前是移动端还是PC端

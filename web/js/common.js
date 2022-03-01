@@ -1,7 +1,5 @@
 let isCamOn = true;
 let isMicOn = true;
-let isScreenOn = false;
-let isJoined = true;
 let rtc = null;
 let cameraId = "";
 let micId = "";
@@ -31,63 +29,40 @@ function login(JMStr) {
       throw SyntaxError();
     }
     oneself_ = res.Data;
-    const sdkAppId = genTestUserSig("").sdkAppId;
     $("title").html(res.Data.Title);
     rtc = new RtcClient({
       nickName: res.Data.XM,
       userId: res.Data.CHID,
-      sdkAppId,
+      sdkAppId: parseInt(res.Data.SDKAppID),
       userSig: res.Data.UserSig,
       roomId: res.Data.RoomId,
     });
-
     ajaxMethod("FindVideoConferenceById", { ID: res.Data.ID }, (result) => {
       if (!result) return;
-
       roomDetail_ = result.Data.VideoConference;
       userList_ = result.Data.VideoConferenceCHRY;
-
       if (userList_.length > 11) {
         // 删除超出的
         userList_ = userList_.slice(0, 12);
       }
-
       initViews();
+      trtcPreliminaryDetection();
       rtc.join();
     });
   });
-}
-
-function initOwn() {
-  $("#member-me").find(".member-id").html(oneself_.XM);
 }
 
 /**
  * 初始化用户列表
  */
 function initViews() {
-  // initOwn();
   for (const user of userList_) {
     if (user.ID == oneself_.CHID) {
       continue;
     }
-    // addMemberView(user.ID, user.UserName);
     addVideoView(user.ID, user.UserName);
     addMaskView(user.ID);
   }
-}
-
-/**
- * 添加成员列表
- * Add a member to the member list
- * @param ID - The ID of the member to add.
- * @param UserName - The name of the user to add to the member list.
- */
-function addMemberView(ID, UserName) {
-  let member = $("#member-me").clone();
-  member.attr("id", "member_" + ID);
-  member.find(".member-id").html(UserName);
-  member.appendTo($("#member-list"));
 }
 
 /**
@@ -202,20 +177,6 @@ function leave() {
 }
 
 /**
- * Publish the local stream to the room
- */
-function publish() {
-  rtc && rtc.publish();
-}
-
-/**
- * Unpublish the current video stream
- */
-function unpublish() {
-  rtc && rtc.unpublish();
-}
-
-/**
  * Mute the local audio stream
  */
 function muteAudio() {
@@ -241,53 +202,6 @@ function muteVideo() {
  */
 function unmuteVideo() {
   rtc && rtc.unmuteLocalVideo();
-}
-
-/**
- * 运行rtc检测
- */
-function Runrtc() {
-  rtcDetection().then((detectionResult) => {
-    detectionResult && deviceTestingInit();
-  });
-
-  TRTC.Logger.setLogLevel(TRTC.Logger.LogLevel.WARN);
-
-  TRTC.Logger.disableUploadLog();
-
-  TRTC.getDevices()
-    .then((devices) => {
-      devices.forEach((item) => {
-        console.log("设备: " + item.label);
-      });
-    })
-    .catch((error) => console.error("getDevices发生错误：" + error));
-
-  TRTC.getCameras().then((devices) => {
-    devices.forEach((device) => {
-      if (!cameraId) {
-        cameraId = device.deviceId;
-      }
-      cameraData.push(device.deviceId);
-      let div = $("<div></div>");
-      div.attr("id", device.deviceId);
-      div.html(device.label);
-      div.appendTo("#camera-option");
-    });
-  });
-
-  TRTC.getMicrophones().then((devices) => {
-    devices.forEach((device) => {
-      if (!micId) {
-        micId = device.deviceId;
-      }
-      micData.push(device.deviceId);
-      let div = $("<div></div>");
-      div.attr("id", device.deviceId);
-      div.html(device.label);
-      div.appendTo("#mic-option");
-    });
-  });
 }
 
 /**
