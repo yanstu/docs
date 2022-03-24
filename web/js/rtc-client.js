@@ -505,7 +505,7 @@ class RtcClient {
       // isDisconnect = event.uplinkNetworkQuality == 6;
 
       var renshu = [8, 5, 2, 0];
-      var fenbianlv = ["240p", "360p", "480p", "780p"];
+      var fenbianlv = ["240p", "360p", "480p", "720p"];
       for (const i in renshu) {
         if (this.members_.size >= renshu[i]) {
           this.localStream_.setVideoProfile(fenbianlv[i]);

@@ -1,7 +1,7 @@
-const baseUrl = [
-  "https://wsllzapptest.gzshifang.com:8091/api/",
-  "https://testvideoapi.gzshifang.com:9011/api/",
-][1];
+const baseUrl = {
+  zhengshi: "https://wsllzapptest.gzshifang.com:8091/api/",
+  ceshi: "https://testvideoapi.gzshifang.com:9011/api/",
+}.zhengshi;
 
 /**
  * A router function that maps the key to the URL.
